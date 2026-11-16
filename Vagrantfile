@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
   config.vm.define "freebsd-zabbix" do |vm|
-    vm.vm.box = "freebsd/FreeBSD-14.1-STABLE"
+    vm.vm.box = "bento/freebsd-14"
     vm.vm.hostname = "freebsd-zabbix"
     vm.vm.network "forwarded_port", guest: 22, host: 2210, host_ip: "127.0.0.1"
 
