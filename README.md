@@ -13,6 +13,8 @@ vagrant up
 
 Po změně skriptů lze znovu spustit `vagrant provision`. Jedinečné jméno ve tvaru `spos-freebsd-xxxxxxxxxxxx` se ukládá do `/var/db/zabbix7-agent/spos-hostname` ve VM. Přežije restart i opakovaný provisioning. Nová VM vytvořená po `vagrant destroy` dostane nové jméno.
 
+Použitý box má userland FreeBSD 14.3, zatímco aktuální repozitář balíčků může obsahovat balíčky sestavené pro 14.4. Instalační skript proto při `pkg update`, `pkg upgrade` a instalaci nastavuje `IGNORE_OSVERSION=yes`. `pkg upgrade` aktualizuje balíčky, nikoli základní systém FreeBSD; pokud agent po instalaci nepůjde spustit, je potřeba použít novější box nebo aktualizovat FreeBSD.
+
 ## Ověření
 
 Po spuštění VM:
@@ -29,7 +31,11 @@ nc -z -w 5 enceladus.pfsense.cz 10051
 sockstat -4 -l | grep 10050
 ```
 
-V Zabbixu vyhledejte název z `spos-hostname`. Ověřte, že je host registrovaný, má správnou skupinu, štítek a vhodnou šablonu pro **FreeBSD s klasickým Zabbix agentem**, a že se aktualizují nejnovější data. Protože je VM za NAT, pro sběr dat je vhodná šablona s aktivními kontrolami; pasivní kontroly vyžadují dosažitelné rozhraní VM ze serveru. Snímek registrovaného hosta a přijímaných dat bude do `Images/` doplněn po skutečném ověření v Zabbixu.
+V Zabbixu vyhledejte název z `spos-hostname`. Na dodaném snímku je host vidět ve skupinách `Customer/SPOS` a `Discovered hosts` se šablonou `FreeBSD by Zabbix agent`:
+
+![Host FreeBSD v Zabbixu se skupinami a šablonou](Images/FBSD-ZBX8-Agent-reg.png)
+
+Snímek neukazuje hodnotu štítku ani nejnovější data. Ty je ještě potřeba ověřit a případný další snímek doplnit do `Images/`. Protože je VM za NAT, pro sběr dat je vhodná šablona s aktivními kontrolami; pasivní kontroly vyžadují dosažitelné rozhraní VM ze serveru.
 
 ## Soubory
 
@@ -37,6 +43,7 @@ V Zabbixu vyhledejte název z `spos-hostname`. Ověřte, že je host registrovan
 - `install-zabbix7-agent.sh`: instalace balíčku a kontrola verze 7.0.
 - `configure-zabbix7-agent.sh`: stálé jméno hosta, nastavení agenta a spuštění služby.
 - `Images/freebsd-zabbix-hero.png`: tematická ilustrace, nikoli důkaz monitorování.
+- `Images/FBSD-ZBX8-Agent-reg.png`: dodaný snímek hosta z webového rozhraní Zabbixu.
 
 ## Zdroje
 

@@ -5,7 +5,9 @@ set -eu
 if ! pkg -N >/dev/null 2>&1; then
   env ASSUME_ALWAYS_YES=yes pkg bootstrap -f
 fi
+export IGNORE_OSVERSION=yes
 pkg update
+pkg upgrade -y
 pkg install -y zabbix7-agent
 
 version=$(pkg query '%v' zabbix7-agent)
