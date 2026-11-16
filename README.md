@@ -2,7 +2,7 @@
 
 ![Ilustrace FreeBSD serveru a monitoringu](Images/freebsd-zabbix-hero.png)
 
-Tato varianta zadání používá box [bento/freebsd-14](https://portal.cloud.hashicorp.com/vagrant/discover/bento/freebsd-14) a klasického agenta **Zabbix 8** kompilovaného z portu `net-mgmt/zabbix8-agent`. Vagrant spustí instalační a konfigurační skript automaticky. Agent se připojuje k `enceladus.pfsense.cz` a pro automatickou registraci odesílá `HostMetadata=FBSD`, aby se použilo pravidlo pro FreeBSD.
+Tato varianta zadání používá box [bento/freebsd-14.3](https://portal.cloud.hashicorp.com/vagrant/discover/bento/freebsd-14.3) a klasického agenta **Zabbix 8** kompilovaného z portu `net-mgmt/zabbix8-agent`. Vagrant spustí instalační a konfigurační skript automaticky. Agent se připojuje k `enceladus.pfsense.cz` a pro automatickou registraci odesílá `HostMetadata=FBSD`, aby se použilo pravidlo pro FreeBSD.
 
 ## Spuštění
 
