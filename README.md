@@ -2,7 +2,7 @@
 
 ![Ilustrace FreeBSD serveru a monitoringu](Images/freebsd-zabbix-hero.png)
 
-Tato varianta zadání používá virtuální stroj **FreeBSD 14.1** a klasického agenta **Zabbix 7.0** z balíčku `zabbix7-agent`. Vagrant spustí instalační a konfigurační skript automaticky. Agent se připojuje k `enceladus.pfsense.cz` a pro automatickou registraci odesílá `HostMetadata=SPOS`.
+Tato varianta zadání používá virtuální stroj **FreeBSD 14.1** a klasického agenta **Zabbix 7.0** z balíčku `zabbix7-agent`. Vagrant spustí instalační a konfigurační skript automaticky. Agent se připojuje k `enceladus.pfsense.cz` a pro automatickou registraci odesílá `HostMetadata=FBSD`, aby se použilo pravidlo pro FreeBSD.
 
 ## Spuštění
 

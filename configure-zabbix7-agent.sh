@@ -32,7 +32,7 @@ cat >> "$config" <<EOF2
 Hostname=$hostname
 Server=enceladus.pfsense.cz
 ServerActive=enceladus.pfsense.cz
-HostMetadata=SPOS
+HostMetadata=FBSD
 EOF2
 
 sysrc zabbix_agentd_enable=YES
