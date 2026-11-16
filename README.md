@@ -20,7 +20,14 @@ BATCH="yes"
 ALLOW_UNSUPPORTED_SYSTEM="YES"
 ```
 
-V adresáři `/usr/ports/net-mgmt/zabbix8-agent/` spustí `make install package clean`. Tím agenta zkompiluje, nainstaluje, vytvoří balíček a vyčistí pracovní soubory. Případného původního agenta 7 před instalací zastaví a odinstaluje. Již nainstalovaného agenta 8 při opakovaném provisioningu přeskočí.
+V adresáři `/usr/ports/net-mgmt/zabbix8-agent/` postupně spustí `make package`, `make install` a `make clean`. Tím agenta zkompiluje, vytvoří balíček před instalací, nainstaluje jej a vyčistí pracovní soubory. Případného původního agenta 7 před instalací zastaví a odinstaluje. Již nainstalovaného agenta 8 při opakovaném provisioningu přeskočí a pokračuje jeho konfigurací.
+
+Pokud předchozí provisioning skončil chybou při vytváření balíčku, ale `pkg info zabbix8-agent` již potvrzuje instalaci, stačí znovu spustit `vagrant provision`. Pro samotné dokončení konfigurace lze uvnitř VM jako root spustit:
+
+```sh
+sh /vagrant/configure-zabbix8-agent.sh
+service zabbix_agentd status
+```
 
 Instalační skript nástrojů při `pkg update` a instalaci nastavuje `IGNORE_OSVERSION=yes` kvůli dříve zjištěnému rozdílu mezi verzí FreeBSD v boxu a repozitářem balíčků.
 
@@ -55,7 +62,7 @@ Na snímcích není vidět hodnota přiřazeného štítku; tu lze ověřit na z
 - `Vagrantfile`: FreeBSD box a automatický provisioning.
 - `install-tools.sh`: instalace balíčků `bash`, `neofetch`, `joe`, `vim`, `htop`, `btop`, `mc`, `nmap`, `git`, `pkgconf`, `muon` a `samurai` před instalací Zabbix agenta.
   Poté stáhne strom portů příkazem `git clone --depth 1 https://git.FreeBSD.org/ports.git /usr/ports`; existující neprázdný adresář při opakovaném provisioningu zachová.
-- `install-zabbix8-agent.sh`: nastaví v `/etc/make.conf` hodnoty `BATCH="yes"` a `ALLOW_UNSUPPORTED_SYSTEM="YES"`, poté v `/usr/ports/net-mgmt/zabbix8-agent/` spustí `make install package clean` a ověří verzi 8. Existující instalaci při opakování přeskočí.
+- `install-zabbix8-agent.sh`: nastaví v `/etc/make.conf` hodnoty `BATCH="yes"` a `ALLOW_UNSUPPORTED_SYSTEM="YES"`, poté v `/usr/ports/net-mgmt/zabbix8-agent/` postupně spustí `make package`, `make install`, `make clean` a ověří verzi 8. Existující instalaci při opakování přeskočí.
 - `configure-zabbix8-agent.sh`: stálé jméno hosta, nastavení agenta a spuštění služby.
 - `Images/freebsd-zabbix-hero.png`: tematická ilustrace, nikoli důkaz monitorování.
 - `Images/FBSD-ZBX8-Agent-reg.png`: dodaný snímek hosta z webového rozhraní Zabbixu.

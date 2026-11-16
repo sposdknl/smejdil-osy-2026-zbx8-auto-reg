@@ -17,7 +17,11 @@ if ! pkg info -e zabbix8-agent; then
     service zabbix_agentd onestop || true
     pkg delete -y zabbix7-agent
   fi
-  make install package clean
+  # Balíček vytvoříme před instalací, dokud jsou dostupná metadata stagingu.
+  # Jednotlivé kroky spouštíme postupně a čistíme až po úspěšné instalaci.
+  make package
+  make install
+  make clean
 fi
 
 version=$(pkg query '%v' zabbix8-agent)
