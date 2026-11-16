@@ -1,11 +1,15 @@
 #!/bin/sh
 set -eu
 
-config=/usr/local/etc/zabbix7/zabbix_agentd.conf
+config=/usr/local/etc/zabbix8/zabbix_agentd.conf
 sample=${config}.sample
-name_file=/var/db/zabbix7-agent/spos-hostname
+name_file=/var/db/zabbix8-agent/spos-hostname
 
-install -d -m 0755 /var/db/zabbix7-agent
+install -d -m 0755 /var/db/zabbix8-agent
+# Při přechodu ze starého agenta zachováme identitu registrovaného hosta.
+if [ ! -s "$name_file" ] && [ -s /var/db/zabbix7-agent/spos-hostname ]; then
+  cp -p /var/db/zabbix7-agent/spos-hostname "$name_file"
+fi
 if [ ! -s "$name_file" ]; then
   id=$(uuidgen | tr -d '-' | cut -c1-12 | tr '[:upper:]' '[:lower:]')
   printf 'spos-freebsd-%s\n' "$id" > "$name_file"
