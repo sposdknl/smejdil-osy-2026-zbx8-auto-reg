@@ -2,7 +2,7 @@
 
 ![Ilustrace FreeBSD serveru a monitoringu](Images/freebsd-zabbix-hero.png)
 
-Tato varianta zadání používá virtuální stroj **FreeBSD 14.1** a klasického agenta **Zabbix 7.0** z balíčku `zabbix7-agent`. Vagrant spustí instalační a konfigurační skript automaticky. Agent se připojuje k `enceladus.pfsense.cz` a pro automatickou registraci odesílá `HostMetadata=FBSD`, aby se použilo pravidlo pro FreeBSD.
+Tato varianta zadání používá box [bento/freebsd-14](https://portal.cloud.hashicorp.com/vagrant/discover/bento/freebsd-14) a klasického agenta **Zabbix 7.0** z balíčku `zabbix7-agent`. Vagrant spustí instalační a konfigurační skript automaticky. Agent se připojuje k `enceladus.pfsense.cz` a pro automatickou registraci odesílá `HostMetadata=FBSD`, aby se použilo pravidlo pro FreeBSD.
 
 ## Spuštění
 
@@ -13,7 +13,7 @@ vagrant up
 
 Po změně skriptů lze znovu spustit `vagrant provision`. Jedinečné jméno ve tvaru `spos-freebsd-xxxxxxxxxxxx` se ukládá do `/var/db/zabbix7-agent/spos-hostname` ve VM. Přežije restart i opakovaný provisioning. Nová VM vytvořená po `vagrant destroy` dostane nové jméno.
 
-Použitý box má userland FreeBSD 14.3, zatímco aktuální repozitář balíčků může obsahovat balíčky sestavené pro 14.4. Instalační skript proto při `pkg update`, `pkg upgrade` a instalaci nastavuje `IGNORE_OSVERSION=yes`. `pkg upgrade` aktualizuje balíčky, nikoli základní systém FreeBSD; pokud agent po instalaci nepůjde spustit, je potřeba použít novější box nebo aktualizovat FreeBSD.
+Instalační skript při `pkg update`, `pkg upgrade` a instalaci nastavuje `IGNORE_OSVERSION=yes` kvůli dříve zjištěnému rozdílu mezi verzí FreeBSD v boxu a repozitářem balíčků. `pkg upgrade` aktualizuje balíčky, nikoli základní systém FreeBSD.
 
 ## Ověření
 
