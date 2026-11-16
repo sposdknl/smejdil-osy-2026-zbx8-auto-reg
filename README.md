@@ -31,11 +31,15 @@ nc -z -w 5 enceladus.pfsense.cz 10051
 sockstat -4 -l | grep 10050
 ```
 
-V Zabbixu vyhledejte název z `spos-hostname`. Na dodaném snímku je host vidět ve skupinách `Customer/SPOS` a `Discovered hosts` se šablonou `FreeBSD by Zabbix agent`:
+V Zabbixu je registrovaný host `spos-freebsd-6b44fe09e1be` ve skupinách `Customer/SPOS` a `Discovered hosts` se šablonou `FreeBSD by Zabbix agent active`:
 
 ![Host FreeBSD v Zabbixu se skupinami a šablonou](Images/FBSD-ZBX8-Agent-reg.png)
 
-Snímek neukazuje hodnotu štítku ani nejnovější data. Ty je ještě potřeba ověřit a případný další snímek doplnit do `Images/`. Protože je VM za NAT, pro sběr dat je vhodná šablona s aktivními kontrolami; pasivní kontroly vyžadují dosažitelné rozhraní VM ze serveru.
+Dashboard téhož hosta ukazuje naměřené hodnoty zatížení a využití CPU, paměti, swapu a souborových systémů za posledních pět minut. Tím je doložený příjem dat ze šablony s aktivními kontrolami:
+
+![Naměřené hodnoty hosta FreeBSD v Zabbixu](Images/FBSD-ZBX8-Agent-reg-Data.png)
+
+Na snímcích není vidět hodnota přiřazeného štítku; tu lze ověřit na záložce `Tags` v detailu hosta.
 
 ## Soubory
 
@@ -44,6 +48,7 @@ Snímek neukazuje hodnotu štítku ani nejnovější data. Ty je ještě potřeb
 - `configure-zabbix7-agent.sh`: stálé jméno hosta, nastavení agenta a spuštění služby.
 - `Images/freebsd-zabbix-hero.png`: tematická ilustrace, nikoli důkaz monitorování.
 - `Images/FBSD-ZBX8-Agent-reg.png`: dodaný snímek hosta z webového rozhraní Zabbixu.
+- `Images/FBSD-ZBX8-Agent-reg-Data.png`: dashboard s naměřenými daty téhož hosta.
 
 ## Zdroje
 
